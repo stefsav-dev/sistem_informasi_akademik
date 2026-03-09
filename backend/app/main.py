@@ -11,15 +11,21 @@ from app.auth.auth import *
 from app.schemas import LoginSchema
 from app.schemas import LogoutSchema
 from app.controller import profile_controller
+from app.ai.routes.ai_routes import router as ai_router
 
 
 app = FastAPI()
 
 app.include_router(profile_controller.router)
+app.include_router(ai_router)
 
 @app.get("/")
 def index():
     return {"message": "Hello World"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 Base.metadata.create_all(bind=engine)
 
@@ -114,4 +120,3 @@ def logout(
     db.commit()
 
     return {"message": "Logout successful"}
-
