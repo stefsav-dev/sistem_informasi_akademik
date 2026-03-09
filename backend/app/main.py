@@ -3,16 +3,23 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from app.database import Base, engine
-from app.dependencies import get_db, require_role
-from app.models import User
+from app.database.database import Base, engine
+from app.controller.dependencies import get_db, require_role
+from app.models.models import User
 from app.schemas import UserCreate
-from app.auth import *
+from app.auth.auth import *
 from app.schemas import LoginSchema
 from app.schemas import LogoutSchema
+from app.controller import profile_controller
 
 
 app = FastAPI()
+
+app.include_router(profile_controller.router)
+
+@app.get("/")
+def index():
+    return {"message": "Hello World"}
 
 Base.metadata.create_all(bind=engine)
 
@@ -108,6 +115,3 @@ def logout(
 
     return {"message": "Logout successful"}
 
-@app.get("/")
-def index():
-    return {"message": "Hello World"}

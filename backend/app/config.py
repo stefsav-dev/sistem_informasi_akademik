@@ -1,7 +1,0 @@
-DATABASE_URL = "mysql+pymysql://root@localhost:3306/spmb_db"
-
-SECRET_KEY = "secret-key"
-ALGORITHM = "HS256"
-
-ACCESS_TOKEN_EXPIRE_MINUTES = 15
-REFRESH_TOKEN_EXPIRE_DAYS = 7
